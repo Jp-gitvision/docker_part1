@@ -1,0 +1,81 @@
+jujupeneau@MacBook-Pro-de-Julien ~ % docker run --detach --name my-nginx -p 80:80 nginx
+
+24cb845ce4840fa191da60e0db4218d8b14ece50700cc7313b70ca18c9b276d1
+jujupeneau@MacBook-Pro-de-Julien ~ % docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                NAMES
+24cb845ce484   nginx     "/docker-entrypoint.…"   3 seconds ago   Up 2 seconds   0.0.0.0:80->80/tcp   my-nginx
+jujupeneau@MacBook-Pro-de-Julien ~ % docker run --detach --name my-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=<your-password> mysql
+
+zsh: no such file or directory: your-password
+jujupeneau@MacBook-Pro-de-Julien ~ % docker run --detach --name my-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=yes  mysql           
+
+1a3bec7e2b6704b8333b98db2deee33ebdc2abf1dd557f03d9cbd9ce94209f2f
+jujupeneau@MacBook-Pro-de-Julien ~ % docker run --d --name my-httpd -p 8080:80 httpd     
+
+unknown flag: --d
+See 'docker run --help'.
+jujupeneau@MacBook-Pro-de-Julien ~ % docker run -d --name my-httpd -p 8080:80 httpd 
+163f68a936b99c779e92d1fa0702ed402f4f3262042d8971f05583a5e37122b9
+jujupeneau@MacBook-Pro-de-Julien ~ % docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS              PORTS                               NAMES
+163f68a936b9   httpd     "httpd-foreground"       4 seconds ago        Up 3 seconds        0.0.0.0:8080->80/tcp                my-httpd
+1a3bec7e2b67   mysql     "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:3306->3306/tcp, 33060/tcp   my-mysql
+24cb845ce484   nginx     "/docker-entrypoint.…"   About a minute ago   Up About a minute   0.0.0.0:80->80/tcp                  my-nginx
+jujupeneau@MacBook-Pro-de-Julien ~ % docker rm -f my-mysql
+my-mysql
+jujupeneau@MacBook-Pro-de-Julien ~ % docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS              PORTS                  NAMES
+163f68a936b9   httpd     "httpd-foreground"       About a minute ago   Up About a minute   0.0.0.0:8080->80/tcp   my-httpd
+24cb845ce484   nginx     "/docker-entrypoint.…"   3 minutes ago        Up 3 minutes        0.0.0.0:80->80/tcp     my-nginx
+jujupeneau@MacBook-Pro-de-Julien ~ % docker run -d --name mymysql -e MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
+2370cab938dc34626d1c716dcc1594fb038638d9fce8a628aed30612b743f411
+jujupeneau@MacBook-Pro-de-Julien ~ % docker logs mymysql
+2023-10-16 16:31:34+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.1.0-1.el8 started.
+2023-10-16 16:31:34+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2023-10-16 16:31:34+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.1.0-1.el8 started.
+2023-10-16 16:31:34+00:00 [Note] [Entrypoint]: Initializing database files
+2023-10-16T16:31:34.707187Z 0 [System] [MY-015017] [Server] MySQL Server Initialization - start.
+2023-10-16T16:31:34.708907Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-10-16T16:31:34.708975Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.1.0) initializing of server in progress as process 80
+2023-10-16T16:31:34.715953Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-10-16T16:31:35.017071Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-10-16T16:31:36.010369Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2023-10-16T16:31:38.182534Z 0 [System] [MY-015018] [Server] MySQL Server Initialization - end.
+2023-10-16 16:31:38+00:00 [Note] [Entrypoint]: Database files initialized
+2023-10-16 16:31:38+00:00 [Note] [Entrypoint]: Starting temporary server
+2023-10-16T16:31:38.215726Z 0 [System] [MY-015015] [Server] MySQL Server - start.
+2023-10-16T16:31:38.444495Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-10-16T16:31:38.445740Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.1.0) starting as process 124
+2023-10-16T16:31:38.459757Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-10-16T16:31:38.708011Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-10-16T16:31:39.079784Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-10-16T16:31:39.079865Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-10-16T16:31:39.081861Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2023-10-16T16:31:39.101297Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2023-10-16T16:31:39.101715Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.1.0'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2023-10-16T16:31:39.104422Z 0 [System] [MY-015016] [Server] MySQL Server - end.
+2023-10-16 16:31:39+00:00 [Note] [Entrypoint]: Temporary server started.
+'/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+2023-10-16 16:31:42+00:00 [Note] [Entrypoint]: GENERATED ROOT PASSWORD: GInWMDbnrS84sRc+27YiG2iu1sXDwmx0
+
+2023-10-16 16:31:42+00:00 [Note] [Entrypoint]: Stopping temporary server
+2023-10-16T16:31:42.233089Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.1.0).
+2023-10-16T16:31:43.590183Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.1.0)  MySQL Community Server - GPL.
+2023-10-16T16:31:43.594697Z 0 [System] [MY-015016] [Server] MySQL Server - end.
+jujupeneau@MacBook-Pro-de-Julien ~ % docker stop $(docker ps -q)
+2370cab938dc
+163f68a936b9
+24cb845ce484
+jujupeneau@MacBook-Pro-de-Julien ~ % docker rm $(docker ps -aq)
+2370cab938dc
+163f68a936b9
+24cb845ce484
+jujupeneau@MacBook-Pro-de-Julien ~ % docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+jujupeneau@MacBook-Pro-de-Julien ~ % 
